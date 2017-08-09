@@ -1,16 +1,32 @@
 // JavaScript Document
-import http from 'http'
-import express from 'express'
-import bodyParser from 'body-parser'
-import mongoose from 'mongoose'
-import routing from './toutes'
+var http = require('http'),
+	express = require('express'),
+	bodyParser = require('body-parser'),
+	login = require('./Login'),
+	eventRouter = require('./Event'),
+	path = require('path'),
+	mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost/events');
-const app = express()
-const Server = http.createServer(app)
-const port = 3000
+var port = 3000
+var app = express()
 
-app.use(express.static('public'))
-app.use('/events', routing)
+mongoose.connect('mongodb://localhost/agenda')
 
-Server.listen(port, ( => console.log('Servidor corriendo en el puerto ${port}')))
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {});
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+	extended: true
+}))
+app.use('/login', login)
+app.use('/events', eventRouter)
+
+app.use(express.static(path.join(__dirname, '../') + 'public')) //public
+
+var Server = http.createServer(app)
+
+Server.listen(port, function () {
+	console.log('Servidor corriendo en el puerto: ' + port)
+})

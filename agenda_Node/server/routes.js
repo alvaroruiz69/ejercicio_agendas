@@ -1,25 +1,23 @@
 // JavaScript Document
-import express from 'express'
-import Evento from './model.js'
+const User = require('./usermodel.js'),
+	mongoose = require('mongoose');
 
-const Router = express.Router()
+mongoose.connect('mongodb://localhost/agenda')
 
-Router.post('/new', (req, res) => {
-	let ev = req.body.ev
-	let newEvent = new Evento({
-		eventId: Math.floor(Math.random() * 1000),
-		start: ev.start,
-		title: ev.title,
-		end: ev.end
-	});
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {});
 
-	newEvent.save();
-});
-
-Router.get('all', (req, res) => {
-	let events = Evento.find()
-	res.status(200);
-	res.json(events);
-});
-
-export default Router
+let user = new User({
+	id: Math.floor(Math.random() * 500),
+	nombre: 'alvaro',
+	password: '12345',
+	birthday: Date('1981-05-10'),
+	email: 'alvaro@mail.cl'
+})
+user.save(function (error) {
+	if (error) {
+		console.log("error: " + error);
+	}
+	console.log("Registro guardado");
+})
