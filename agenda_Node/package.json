@@ -6,13 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-	"author": "Alvaro Ruiz",
+  "author": "Alvaro Ruiz",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",
-    "express": "^4.15.3",
+    "express": "^4.15.4",
     "fullcalendar": "^3.0.1",
-    "mongoose": "^4.11.5"
+    "mongoose": "^4.11.6"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.18.0",
@@ -20,4 +20,3 @@
     "browserify": "^13.1.1"
   }
 }
-

@@ -1,4 +1,4 @@
-const Event = require('../eventmodel.js'),
+const Event = require('../model.js'),
 	express = require('express'),
 	path = require('path'),
 	Router = express.Router(),
